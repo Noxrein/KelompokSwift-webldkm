@@ -1,10 +1,10 @@
-// Mobile menu toggle
 const menuToggle = document.querySelector('.menu-toggle');
 const navLinks = document.querySelector('.nav-links');
 
 if (menuToggle) {
   menuToggle.addEventListener('click', () => {
-    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+    navLinks.style.display =
+      navLinks.style.display === 'flex' ? 'none' : 'flex';
 
     if (navLinks.style.display === 'flex') {
       navLinks.style.flexDirection = 'column';
@@ -19,6 +19,9 @@ if (menuToggle) {
     }
   });
 }
+
+
+// ===== ANIMATE ON SCROLL =====
 const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach(entry => {
@@ -27,10 +30,27 @@ const observer = new IntersectionObserver(
       }
     });
   },
-  {
-    threshold: 0.2
-  }
+  { threshold: 0.2 }
 );
 
 document.querySelectorAll('.animate-on-scroll')
   .forEach(el => observer.observe(el));
+
+
+// ===== SCROLL TO TOP BUTTON =====
+const scrollToTopBtn = document.getElementById('scrollToTop');
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 300) {
+    scrollToTopBtn.classList.add('show');
+  } else {
+    scrollToTopBtn.classList.remove('show');
+  }
+});
+
+scrollToTopBtn.addEventListener('click', () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
