@@ -648,6 +648,14 @@ footer {
   align-items: center;
   justify-content: center;
   background: rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+}
+
+.footer-social a,
+.footer-social a:hover,
+.footer-social a:focus,
+.footer-social a:active {
+  text-decoration: none !important;
 }
 
 .footer-social a:hover {
