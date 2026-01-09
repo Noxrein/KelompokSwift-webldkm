@@ -20,7 +20,6 @@ if (menuToggle) {
   });
 }
 
-
 // ===== ANIMATE ON SCROLL =====
 const observer = new IntersectionObserver(
   (entries) => {
@@ -54,3 +53,68 @@ scrollToTopBtn.addEventListener('click', () => {
     behavior: 'smooth'
   });
 });
+
+// ===== TEAM CAROUSEL AUTO ANIMATION =====
+const carousel = document.querySelector(".team-carousel");
+const cards = document.querySelectorAll(".team-card");
+const nextBtn = document.querySelector(".carousel-btn.next");
+const prevBtn = document.querySelector(".carousel-btn.prev");
+
+let activeIndex = 0;
+let autoSlideTimer;
+
+function updateCarousel() {
+  cards.forEach((card, index) => {
+    card.classList.toggle("active", index === activeIndex);
+  });
+
+  const activeCard = cards[activeIndex];
+  const offset =
+    activeCard.offsetLeft -
+    carousel.offsetWidth / 2 +
+    activeCard.offsetWidth / 2;
+
+  carousel.scrollTo({
+    left: offset,
+    behavior: "smooth",
+  });
+}
+
+function nextCard() {
+  activeIndex = (activeIndex + 1) % cards.length;
+  updateCarousel();
+}
+
+function prevCard() {
+  activeIndex = (activeIndex - 1 + cards.length) % cards.length;
+  updateCarousel();
+}
+
+function startAutoScroll() {
+  autoSlideTimer = setInterval(nextCard, 2500);
+}
+
+function stopAutoScroll() {
+  clearInterval(autoSlideTimer);
+}
+
+// Controls
+nextBtn.addEventListener("click", () => {
+  stopAutoScroll();
+  nextCard();
+  startAutoScroll();
+});
+
+prevBtn.addEventListener("click", () => {
+  stopAutoScroll();
+  prevCard();
+  startAutoScroll();
+});
+
+// Pause on hover (important polish)
+carousel.addEventListener("mouseenter", stopAutoScroll);
+carousel.addEventListener("mouseleave", startAutoScroll);
+
+// Init
+updateCarousel();
+startAutoScroll();
